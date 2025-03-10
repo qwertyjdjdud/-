@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магическая Анимация</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000 url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="5"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.8"/></svg>');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .magic-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            perspective: 1000px;
+            filter: drop-shadow(0 0 30px rgba(255,215,0,0.5));
+        }
+
+        .ancient-text {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 5.5rem;
+            color: #ffffff;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            animation: magicRevelation 8s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 
+                0 0 20px #ffffff,
+                0 0 40px #ffd700,
+                0 0 60px hsl(0, 0%, 100%),
+                0 0 80px hsl(0, 0%, 100%),
+                2px 2px 2px rgba(0, 0, 0, 0.8);
+            transform-style: preserve-3d;
+        }
+
+        .magic-button {
+            position: fixed;
+            bottom: 50px;
+            padding: 20px 50px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 2rem;
+            background: linear-gradient(45deg, #2a1a0f 0%, #4a3728 100%);
+            color: #ffffff;
+            border: 4px solid #ffffff;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 0 30px #00000055,
+                0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .magic-button:hover {
+            background: linear-gradient(45deg, #4a3728 0%, #6b553f 100%);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 0 50px #00000099,
+                0 10px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes magicRevelation {
+            0% {
+                opacity: 0;
+                transform: 
+                    translateY(100vh) 
+                    rotateX(90deg) 
+                    scale(0.1)
+                    rotateZ(-45deg);
+                filter: blur(30px) brightness(5);
+            }
+            15% {
+                opacity: 1;
+                transform: 
+                    translateY(40vh) 
+                    rotateX(20deg) 
+                    scale(1.5)
+                    rotateZ(-15deg);
+                filter: blur(10px) brightness(3);
+            }
+            30% {
+                transform: 
+                    translateY(0) 
+                    rotateX(0deg) 
+                    scale(1)
+                    rotateZ(0deg);
+                filter: blur(0) brightness(2);
+            }
+            45% {
+                transform: 
+                    translateY(-20vh) 
+                    rotateX(-10deg) 
+                    scale(1.2)
+                    rotateZ(5deg);
+                filter: brightness(1.5);
+            }
+            60% {
+                transform: 
+                    translateY(-40vh) 
+                    rotateX(-20deg) 
+                    scale(0.9)
+                    rotateZ(-5deg);
+                opacity: 0.9;
+            }
+            75% {
+                transform: 
+                    translateY(-60vh) 
+                    rotateX(-30deg) 
+                    scale(0.6)
+                    rotateZ(10deg);
+                opacity: 0.6;
+            }
+            90% {
+                transform: 
+                    translateY(-80vh) 
+                    rotateX(-40deg) 
+                    scale(0.3)
+                    rotateZ(-15deg);
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: 
+                    translateY(-100vh) 
+                    rotateX(-50deg) 
+                    scale(0.1)
+                    rotateZ(-25deg);
+            }
+        }
+
+        .sparkles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            background: #ffd700;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            animation: sparkle 1s infinite;
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(2); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
+        .glow-effect {
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 0%, transparent 60%);
+            animation: glowPulse 3s infinite;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        @media (max-width: 768px) {
+            .ancient-text { font-size: 3.5rem; }
+            .magic-button { font-size: 1.5rem; padding: 15px 35px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="magic-container">
+        <div class="glow-effect"></div>
+        <h1 class="ancient-text" id="mainText">Рита дура</h1>
+        <div class="sparkles" id="sparklesContainer"></div>
+    </div>
+    
+    <button class="magic-button" onclick="toggleText()">Нет</button>
+
+    <script>
+        let isFact = false;
+        
+        function toggleText() {
+            const textElement = document.getElementById('mainText');
+            isFact = !isFact;
+            
+            textElement.style.animation = 'none';
+            void textElement.offsetWidth;
+            textElement.style.animation = 'magicRevelation 8s infinite cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            textElement.textContent = isFact ? "Нет это факты" : "Рита дура";
+            
+            // Добавляем искры при нажатии
+            createSparkles();
+        }
+
+        function createSparkles() {
+            const container = document.getElementById('sparklesContainer');
+            for(let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }
+
+        // Автогенерация искр
+        setInterval(() => {
+            if(Math.random() < 0.3) createSparkles();
+        }, 1000);
+    </script>
+</body>
+</html>
